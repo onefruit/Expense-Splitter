@@ -49,6 +49,7 @@ public class SecurityConfig {
                         auth -> auth
                                 .requestMatchers(PUBLIC_URLS).permitAll()
                                 .requestMatchers("/user/**").permitAll()
+                                .requestMatchers("/group/**").authenticated()
                                 .anyRequest().authenticated())
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(requestFilter, UsernamePasswordAuthenticationFilter.class);

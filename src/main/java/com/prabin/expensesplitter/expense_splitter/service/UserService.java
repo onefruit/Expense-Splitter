@@ -4,6 +4,7 @@ import com.prabin.expensesplitter.expense_splitter.jwt.JwtHelper;
 import com.prabin.expensesplitter.expense_splitter.model.User;
 import com.prabin.expensesplitter.expense_splitter.payload.request.LoginRequest;
 import com.prabin.expensesplitter.expense_splitter.payload.request.RegisterRequest;
+import com.prabin.expensesplitter.expense_splitter.payload.response.UserResponse;
 import com.prabin.expensesplitter.expense_splitter.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +31,7 @@ public class UserService {
     private final JwtHelper jwtHelper;
 
 
-    public User register(RegisterRequest request) {
+    public UserResponse register(RegisterRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("Email already registered!");
         }
@@ -41,7 +42,11 @@ public class UserService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .build();
 
-        return userRepository.save(user);
+        User user1 = userRepository.save(user);
+
+        return UserResponse.builder().name(user1.getName())
+                .email(user1.getEmail())
+                .build();
     }
 
     public User getCurrentProfile() {

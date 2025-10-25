@@ -1,8 +1,8 @@
 package com.prabin.expensesplitter.expense_splitter.controller;
 
-import com.prabin.expensesplitter.expense_splitter.model.User;
 import com.prabin.expensesplitter.expense_splitter.payload.request.LoginRequest;
 import com.prabin.expensesplitter.expense_splitter.payload.request.RegisterRequest;
+import com.prabin.expensesplitter.expense_splitter.payload.response.UserResponse;
 import com.prabin.expensesplitter.expense_splitter.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,8 +22,8 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<User> registerProfile(@RequestBody RegisterRequest request) {
-        User registerProfile = userService.register(request);
+    public ResponseEntity<UserResponse> registerProfile(@RequestBody RegisterRequest request) {
+        UserResponse registerProfile = userService.register(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(registerProfile);
     }
 
